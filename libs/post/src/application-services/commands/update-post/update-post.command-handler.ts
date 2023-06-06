@@ -1,8 +1,8 @@
 import { PostRepository } from 'lib/post/providers';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdatePostCommand } from './update-post.command';
 import { PostAggregate } from 'lib/post/domain';
 import { BadRequestException, Logger } from '@nestjs/common';
+import { UpdatePostCommand } from './update-post.command';
 
 @CommandHandler(UpdatePostCommand)
 export class UpdatePostCommandHandler
