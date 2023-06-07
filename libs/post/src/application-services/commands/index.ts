@@ -5,6 +5,17 @@ import { UpdatePostCommandHandler } from './update-post/update-post.command-hand
 import { DeletePostCommandHandler } from './delete-post/delete-post.command-handler';
 import { SetPublishedCommandHandler } from './set-published/set-published.command-handler';
 
+// command
+export * from './create-post/create-post.command';
+export * from './update-post/update-post.command';
+export * from './set-published/set-published.command';
+export * from './delete-post/delete-post.command';
+// command-handler
+export * from './create-post/create-post.command-handler';
+export * from './update-post/update-post.command-handler';
+export * from './set-published/set-published.command-handler';
+export * from './delete-post/delete-post.command-handler';
+
 export const POST_COMMANDS_HANDLERS: Type<ICommandHandler>[] = [
   CreatePostCommandHandler,
   UpdatePostCommandHandler,
