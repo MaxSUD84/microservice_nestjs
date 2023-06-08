@@ -19,6 +19,6 @@ export class GetPostsQueryHandler
         this.logger.error(err);
         return [[], 0];
       });
-    return [data, count] as [[PostAggregate], number];
+    return [data, count] as [PostAggregate[], number];
   }
 }
