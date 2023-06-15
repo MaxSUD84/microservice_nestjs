@@ -5,5 +5,5 @@ export interface ISetNotPublished {
 }
 
 export const SET_NOT_PUBLISHED = async function (this: IPost) {
-  this.published = false;
+  this.isPublished = false;
 };

@@ -1,5 +1,6 @@
 import { IPost } from './post.interface';
-import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
+// import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
+import { v4 } from 'uuid';
 import { PostServices } from './services';
 import {
   IsBoolean,
@@ -13,7 +14,8 @@ import { DomainError } from 'lib/errors';
 
 export class PostAggregate extends PostServices implements IPost {
   @IsUUID()
-  id: string = randomStringGenerator();
+  // id: string = randomStringGenerator();
+  id: string = v4();
 
   @IsString()
   @IsNotEmpty()
@@ -29,7 +31,7 @@ export class PostAggregate extends PostServices implements IPost {
 
   @IsBoolean()
   @Exclude()
-  published = false;
+  isPublished = false;
 
   @IsString()
   createdAt = new Date().toISOString();
@@ -47,6 +49,7 @@ export class PostAggregate extends PostServices implements IPost {
     Object.assign(_post, post);
     _post.updatedAt = post?.id ? new Date().toISOString() : _post.updatedAt;
     const errors = validateSync(_post, { whitelist: true });
+    // console.log(errors)
     if (!!errors.length) {
       throw new DomainError(errors, 'Post not VALID');
     }
