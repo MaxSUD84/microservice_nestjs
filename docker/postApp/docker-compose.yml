@@ -27,8 +27,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-123456}
     volumes:
       - pgadmin_post:/root/.pgadmin
-      - .pgadmin/servers.json:/pgadmin4/servers.json
-      - .pgadmin/pgpass:/pgadmin4/pgpass
+      - .pgadmin/config/servers.json:/pgadmin4/servers.json
+      - .pgadmin/config/pgpass:/pgadmin4/pgpass
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
@@ -37,11 +37,10 @@ services:
 
 volumes:
   postgres_post:
-    # name: ${DATABASE_VOLUME:-./postgres/volume}
     driver: local
   pgadmin_post:
-    # name: ${PGADMIN_VOLUME}
     driver: local
+
 networks:
   postgres_post:
     driver: bridge

@@ -1,1 +1,0 @@
-postgres_post_container:5432:db_test:postgres:123456
