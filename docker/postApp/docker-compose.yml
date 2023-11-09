@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   postgres_post:
-    container_name: postgres_post_container
+    container_name: psql_container
     # build: ./postgres
     image: postgres:15.2
     environment:
@@ -13,13 +13,13 @@ services:
     volumes:
       - postgres_post:${PGDATA:-/data/postgres}
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - '${DB_PORT:-5432}:5432'
     networks:
       - postgres_post
     restart: unless-stopped
 
   pgadmin_post:
-    container_name: pgadmin_post_container
+    container_name: pgadm_container
     # build: ./pgadmin
     image: dpage/pgadmin4
     environment:
@@ -27,10 +27,10 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-123456}
     volumes:
       - pgadmin_post:/root/.pgadmin
-      - .pgadmin/config/servers.json:/pgadmin4/servers.json
-      - .pgadmin/config/pgpass:/pgadmin4/pgpass
+      - ./pgadmin/config/servers.json:/pgadmin4/servers.json
+      - ./pgadmin/config/pgpass:/pgadmin4/pgpass
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - '${PGADMIN_PORT:-5050}:80'
     networks:
       - postgres_post
     restart: unless-stopped

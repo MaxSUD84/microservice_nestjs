@@ -1,1 +1,1 @@
-postgres_post_container:5432:db_test:postgres:123456
+host.docker.internal:6433:db_test:postgres:123456
