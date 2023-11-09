@@ -9,6 +9,7 @@ import {
   UseGuards,
   Put,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { PostFacade } from 'lib/post/application-services';
 import { CreatePostDto, UpdatePostDto } from './dto';
@@ -82,5 +83,10 @@ export class PostController {
   @Patch(':id')
   async setPublished(@Param('id', ParseUUIDPipe) id: string) {
     return this.postFacade.commands.setPublished(id);
+  }
+
+  @Delete(':id')
+  deletePost(@Param('id', ParseUUIDPipe) id: string) {
+    return this.postFacade.commands.deletePost(id);
   }
 }
