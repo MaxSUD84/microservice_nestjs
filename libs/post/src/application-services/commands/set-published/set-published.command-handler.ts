@@ -10,6 +10,7 @@ export class SetPublishedCommandHandler
 {
   private readonly logger = new Logger(SetPublishedCommandHandler.name);
   constructor(private readonly postRepository: PostRepository) {}
+
   async execute({ id }: SetPublishedCommand): Promise<PostAggregate> {
     const existPost = await this.postRepository.findOne(id).catch((err) => {
       this.logger.error(err);
@@ -21,7 +22,8 @@ export class SetPublishedCommandHandler
     }
 
     const postAggregate = PostAggregate.create(existPost);
-    postAggregate.setNotPublished();
+    postAggregate.setPublished();
+    postAggregate.plainToInstance();
     await this.postRepository.save(postAggregate);
     return postAggregate;
   }
