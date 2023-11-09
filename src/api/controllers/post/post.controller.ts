@@ -7,9 +7,11 @@ import {
   ParseUUIDPipe,
   Post,
   UseGuards,
+  Put,
+  Patch,
 } from '@nestjs/common';
 import { PostFacade } from 'lib/post/application-services';
-import { CreatePostDto } from './dto';
+import { CreatePostDto, UpdatePostDto } from './dto';
 import { JwtGuard } from 'lib/auth/guards/jwt.guard';
 import { CurrentUser, ICurrentUser, Public } from 'lib/auth';
 import { PaginationDto } from 'lib/shared/dto';
@@ -64,5 +66,21 @@ export class PostController {
       data,
       total: count,
     };
+  }
+
+  @Put()
+  async updatePost(
+    @CurrentUser() user: ICurrentUser,
+    @Body() updatePost: UpdatePostDto,
+  ) {
+    return this.postFacade.commands.updatePost({
+      ...updatePost,
+      authorId: user.userId,
+    });
+  }
+
+  @Patch(':id')
+  async setPublished(@Param('id', ParseUUIDPipe) id: string) {
+    return this.postFacade.commands.setPublished(id);
   }
 }
