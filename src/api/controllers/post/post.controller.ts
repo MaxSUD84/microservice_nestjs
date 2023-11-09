@@ -1,31 +1,42 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
-  Query,
   ParseUUIDPipe,
-  Post,
-  UseGuards,
-  Put,
   Patch,
-  Delete,
+  Post,
+  Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
-import { PostFacade } from 'lib/post/application-services';
-import { CreatePostDto, UpdatePostDto } from './dto';
-import { JwtGuard } from 'lib/auth/guards/jwt.guard';
-import { CurrentUser, ICurrentUser, Public } from 'lib/auth';
-import { PaginationDto } from 'lib/shared/dto';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
-import { ResponseWithPagination } from 'lib/shared';
+import { CurrentUser, ICurrentUser, Public } from 'lib/auth';
+import { JwtGuard } from 'lib/auth/guards/jwt.guard';
 import { PostAggregate } from 'lib/post';
+import { PostFacade } from 'lib/post/application-services';
+import { ApiOkResponsePaginated, ResponseWithPagination } from 'lib/shared';
+import { PaginationDto } from 'lib/shared/dto';
+import { CreatePostDto, UpdatePostDto } from './dto';
+import { PostResponse } from './response';
 // import { v4 } from 'uuid';
 
+@ApiTags('Posts')
 @UseGuards(JwtGuard)
 @Controller('post')
 export class PostController {
   constructor(private readonly postFacade: PostFacade) {}
 
+  @ApiOperation({ summary: 'Создание поста' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: PostResponse })
   @Post()
   createPost(
     @CurrentUser() user: ICurrentUser,
@@ -47,12 +58,16 @@ export class PostController {
    *  }
    */
 
+  @ApiOperation({ summary: 'Получение поста по идентификации' })
+  @ApiOkResponse({ type: PostResponse })
   @Public()
   @Get(':id')
   async getPostById(@Param('id', ParseUUIDPipe) id: string) {
     return this.postFacade.queries.getOnePost(id);
   }
 
+  @ApiOperation({ summary: 'Получение всех постов' })
+  @ApiOkResponsePaginated(PostResponse)
   @Public()
   @Get()
   async getAllPost(
@@ -69,6 +84,8 @@ export class PostController {
     };
   }
 
+  @ApiOperation({ summary: 'Обновление поста' })
+  @ApiOkResponse({ type: PostResponse })
   @Put()
   async updatePost(
     @CurrentUser() user: ICurrentUser,
@@ -80,11 +97,15 @@ export class PostController {
     });
   }
 
+  @ApiOperation({ summary: 'Публикация поста' })
+  @ApiOkResponse({ type: PostResponse })
   @Patch(':id')
   async setPublished(@Param('id', ParseUUIDPipe) id: string) {
     return this.postFacade.commands.setPublished(id);
   }
 
+  @ApiOperation({ summary: 'Удаление поста' })
+  @ApiOkResponse({ type: Boolean })
   @Delete(':id')
   deletePost(@Param('id', ParseUUIDPipe) id: string) {
     return this.postFacade.commands.deletePost(id);
