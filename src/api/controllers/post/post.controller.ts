@@ -25,7 +25,7 @@ import { PostFacade } from 'lib/post/application-services';
 import { ApiOkResponsePaginated, ResponseWithPagination } from 'lib/shared';
 import { PaginationDto } from 'lib/shared/dto';
 import { CreatePostDto, UpdatePostDto } from './dto';
-import { PostResponse } from './response';
+import { PostResponse } from './responses';
 // import { v4 } from 'uuid';
 
 @ApiTags('Posts')
