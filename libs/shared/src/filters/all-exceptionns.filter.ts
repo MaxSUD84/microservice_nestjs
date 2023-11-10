@@ -21,12 +21,14 @@ export class AllExceptionnsFilter<T> implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-    if (['graphqpl'].includes(host.getType())) {
+    if (['graphql'].includes(host.getType())) {
       throw new HttpException(
         this._response(status, request, exception),
         status,
       );
     }
+
+    // console.log('response: ', JSON.stringify(response));
     response.status(status).json(this._response(status, request, exception));
   }
 

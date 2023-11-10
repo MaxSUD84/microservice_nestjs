@@ -44,6 +44,7 @@ export class PostResolver {
     });
   }
 
+  // @Public()
   @Mutation(() => PostResponse)
   async setPublichedPost(@Args('id') id: string) {
     return this.postFacade.commands.setPublished(id);
@@ -60,6 +61,7 @@ export class PostResolver {
     });
   }
 
+  // @Public()
   @Mutation(() => Boolean)
   async deletePost(@Args('id') id: string) {
     return this.postFacade.commands.deletePost(id);
