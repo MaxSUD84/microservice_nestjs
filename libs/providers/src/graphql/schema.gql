@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreatePostInput {
+  message: String!
+  title: String!
+}
+
+type Mutation {
+  createPost(createPostInput: CreatePostInput!): PostResponse!
+  deletePost(id: String!): Boolean!
+  setPublichedPost(id: String!): PostResponse!
+  updatePost(updatePostInput: UpdatePostInput!): PostResponse!
+}
+
 type PaginatedPosts {
   data: [PostResponse!]
   limit: Int!
@@ -38,4 +50,10 @@ type Query {
     """Пропуск строк"""
     offset: Int! = 0
   ): PaginatedPosts!
+}
+
+input UpdatePostInput {
+  id: ID!
+  message: String
+  title: String
 }

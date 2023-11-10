@@ -50,7 +50,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Boolean)
-  async daletePost(@Args('id') id: string) {
+  async deletePost(@Args('id') id: string) {
     return this.postFacade.commands.deletePost(id);
   }
 }
