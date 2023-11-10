@@ -3,7 +3,7 @@ import { PostResponse, PaginatedPosts } from '../responses';
 import { PostFacade } from 'lib/post/application-services';
 import { PaginationDto } from 'lib/shared';
 import { plainToClass } from 'class-transformer';
-import { CreatePostInput } from '../inputs';
+import { CreatePostInput, UpdatePostInput } from '../inputs';
 import { v4 } from 'uuid';
 
 @Resolver(() => PostResponse)
@@ -39,5 +39,18 @@ export class PostResolver {
   @Mutation(() => PostResponse)
   async setPublichedPost(@Args('id') id: string) {
     return this.postFacade.commands.setPublished(id);
+  }
+
+  @Mutation(() => PostResponse)
+  async updatePost(@Args('updatePostInput') updatePostInput: UpdatePostInput) {
+    return this.postFacade.commands.updatePost({
+      ...updatePostInput,
+      authorId: v4(),
+    });
+  }
+
+  @Mutation(() => Boolean)
+  async daletePost(@Args('id') id: string) {
+    return this.postFacade.commands.deletePost(id);
   }
 }
