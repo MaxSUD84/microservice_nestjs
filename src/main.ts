@@ -33,6 +33,10 @@ async function bootstrap() {
       `Swagger documentation on http://localhost:${port}/api-doc`,
       'SWAGGER',
     );
+    Logger.log(
+      `GraphQL playground on http://localhost:${port}/graphgl`,
+      'GarphQL',
+    );
   });
 }
 bootstrap();
