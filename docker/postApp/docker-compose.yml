@@ -35,6 +35,19 @@ services:
       - postgres_post
     restart: unless-stopped
 
+  rabbitmq_post:
+    container_name: rabbitmq_container
+    image: rabbitmq:management
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword
+      - RABBITMQ_DEFAULT_VHOST=rabbitMq
+    ports:
+      - '${RABBITMQ_PORT:-5672}:5672'
+      - '${RABBITMQ_PORT_RM:-15672}:15672'
+    restart: always
+
 volumes:
   postgres_post:
     driver: local
