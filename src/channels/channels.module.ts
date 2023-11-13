@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConsumerService } from './consumer.service';
 
 @Module({
-  providers: [ConsumerService]
+  providers: [ConsumerService],
 })
 export class ChannelsModule {}
