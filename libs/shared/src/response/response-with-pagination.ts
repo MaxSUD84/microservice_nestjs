@@ -11,12 +11,6 @@ export class ResponseWithPagination<T> extends PaginationDto {
   @ApiProperty({ description: 'Всего записей в БД', type: 'number' })
   total!: number;
 
-  @ApiProperty({ description: 'Количество отображаемых строк', type: 'number' })
-  limit: number;
-
-  @ApiProperty({ description: 'Пропуск строк', type: 'number' })
-  offset: number;
-
   @ApiProperty({
     description: 'Набор данных',
     default: [],
