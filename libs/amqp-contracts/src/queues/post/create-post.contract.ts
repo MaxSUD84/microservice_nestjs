@@ -6,7 +6,7 @@ import {
 } from '@amqp/amqp-contracts/shared';
 import { CreatePostRequest, PostResponse } from './interfaces';
 
-export namespace CretePostContract {
+export namespace CreatePostContract {
   export const queue: QueueDeclaration = {
     exchange: EXCHANGE_POST,
     queue: `${EXCHANGE_POST.name}-create`,
