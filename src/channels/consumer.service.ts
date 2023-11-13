@@ -19,15 +19,27 @@ export class ConsumerService {
   ): Promise<CreatePostContract.response> {
     const { payload: post, ...requestMessage } = request;
     try {
-      const createdPost = this.postFacade.commands.createPost(post);
-
+      const createdPost = await this.postFacade.commands.createPost(post);
       return {
         ...requestMessage,
-        payload: createdPost,
+        payload: {
+          ...createdPost,
+        },
       };
     } catch (error) {
       this.logger.error(error);
-      return null;
+      return {
+        ...requestMessage,
+        payload: null,
+        error: this.errorHandler(error),
+      };
     }
+  }
+
+  private errorHandler(error: any) {
+    return {
+      code: error?.name ?? 'error',
+      message: error?.message || JSON.stringify(error),
+    };
   }
 }
