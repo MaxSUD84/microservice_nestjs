@@ -6,7 +6,13 @@ import { DomainsModule } from './domains/domains.module';
 import { ChannelsModule } from './channels/channels.module';
 
 @Module({
-  imports: [SharedModule, ProvidersModule, ApiModule, DomainsModule, ChannelsModule],
+  imports: [
+    SharedModule,
+    ProvidersModule,
+    ApiModule,
+    DomainsModule,
+    ChannelsModule,
+  ],
   controllers: [],
   providers: [],
 })
